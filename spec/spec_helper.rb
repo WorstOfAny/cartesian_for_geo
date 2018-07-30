@@ -1,6 +1,17 @@
-# frozen_string_literal: true
+require 'cartesian_for_geo'
 
-require 'polygon'
-require 'bacon'
-require 'bacon/colored_output'
-require 'pry-byebug'
+RSpec.configure do |config|
+	require_relative '../lib/cartesian_for_geo.rb'
+
+	# Enable flags like --only-failures and --next-failure
+	config.example_status_persistence_file_path = '.rspec_status'
+
+	# Disable RSpec exposing methods globally on `Module` and `main`
+	config.disable_monkey_patching!
+
+	config.expect_with :rspec do |c|
+		c.syntax = :expect
+	end
+
+	config.before(:example) { stub_const('CFG', CartesianForGeo) }
+end

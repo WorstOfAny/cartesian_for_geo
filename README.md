@@ -1,13 +1,11 @@
-# Polygon
-
-TODO: Delete this and describe your gem
+# CartesianForGeo
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'polygon-spliter'
+gem 'cartesian_for_geo'
 ```
 
 And then execute:
@@ -16,11 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install polygon-spliter
-
-## Usage
-
-TODO: Write usage instructions here
+    $ gem install cartesian_for_geo
 
 ## License
 
