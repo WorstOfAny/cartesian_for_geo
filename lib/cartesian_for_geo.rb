@@ -32,7 +32,7 @@ module CartesianForGeo
 			alias [] new
 
 			def parse(coords_text)
-				new *coords_text.gsub(/[()\s], ''/).split(',')
+				new *coords_text.gsub(/[()\s]/, '').split(',').map(&:to_f)
 			end
 		end
 

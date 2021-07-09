@@ -13,6 +13,11 @@ RSpec.describe CartesianForGeo::Point do
 			subject { CFG::Point.parse('(1.0, 2.0)').instance_of? CFG::Point }
 			is_expected.to be_truthy
 		end
+
+		it 'should be like normal point' do
+			subject { CFG::Point.parse('(1.0, 2.0)') == CFG::Point[1.0, 2.0] }
+			is_expected.to be_truthy
+		end
 	end
 
 	before(:example) do
