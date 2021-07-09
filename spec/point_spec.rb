@@ -8,10 +8,19 @@ RSpec.describe CartesianForGeo::Point do
 		end
 	end
 
+	describe '::parse' do
+		it 'should create new point' do
+			subject { CFG::Point.parse('(1.0, 2.0)').instance_of? CFG::Point }
+			is_expected.to be_truthy
+		end
+	end
+
 	before(:example) do
 		@point1 = CFG::Point[1.0, 2.0]
 		@point2 = CFG::Point[1.0, -2.0]
 		@point3 = CFG::Point[1.0, nil]
+
+		@points = [@point1, @point2, @point3]
 	end
 
 	describe '#side' do
@@ -77,6 +86,22 @@ RSpec.describe CartesianForGeo::Point do
 			expect(@point1.to_a).to eq([1.0, 2.0])
 			expect(@point2.to_a).to eq([1.0, -2.0])
 			expect(@point3.to_a).to eq([1.0, nil])
+		end
+	end
+
+	describe '#lat_lng' do
+		it 'should return array with [lat, lng]' do
+			@points.each do |point|
+				expect(point.lat_lng).to eq([point.lat, point.lng])
+			end
+		end
+	end
+
+	describe '#lng_lat' do
+		it 'should return array with [lng, lat]' do
+			@points.each do |point|
+				expect(point.lng_lat).to eq([point.lng, point.lat])
+			end
 		end
 	end
 

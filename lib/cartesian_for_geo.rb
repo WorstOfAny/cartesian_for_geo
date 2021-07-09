@@ -26,9 +26,14 @@ module CartesianForGeo
 		attr_reader :coords
 
 		alias to_a coords
+		alias lat_lng coords
 
 		class << self
 			alias [] new
+
+			def parse(coords_text)
+				new *coords_text.gsub(/[()\s], ''/).split(',')
+			end
 		end
 
 		def initialize(*coords)
@@ -50,6 +55,10 @@ module CartesianForGeo
 
 		def to_s
 			empty? ? '' : "(#{lat},#{lng})"
+		end
+
+		def lng_lat
+			coords.reverse
 		end
 
 		def to_json(*)
