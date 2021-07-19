@@ -1,10 +1,17 @@
 require 'json'
 
 RSpec.describe CartesianForGeo::Point do
+	describe '::new' do
+		it 'should create new point' do
+			subject { CFG::Point.new(1.0, 2.0).instance_of? CFG::Point }
+			is_expected.to be_truthy
+		end
+	end
+
 	describe '::[]' do
 		it 'should create new point' do
-			subject { CFG::Point[1.0, 2.0].instance_of? CFG::Point }
-			is_expected.to be_truthy
+			subject { CFG::Point[1.0, 2.0] }
+			is_expected.to be_kind_of(CFG::Point)
 		end
 	end
 
@@ -94,18 +101,28 @@ RSpec.describe CartesianForGeo::Point do
 		end
 	end
 
-	describe '#lat_lng' do
-		it 'should return array with [lat, lng]' do
+	describe '#lng_lat!' do
+		it 'should return self with `lng_lat` order' do
 			@points.each do |point|
-				expect(point.lat_lng).to eq([point.lat, point.lng])
+				point.lng_lat!
+				expect(point.to_a).to eq([point.lng, point.lat])
+				expect(point.order).to eq(:lng_lat)
+				expect(point.to_s).to eq(
+					point.empty? ? '' : "(#{[point.lng, point.lat].join(',')})"
+				)
 			end
 		end
 	end
 
-	describe '#lng_lat' do
-		it 'should return array with [lng, lat]' do
+	describe '#lat_lng!' do
+		it 'should return self with `lat_lng` order' do
 			@points.each do |point|
-				expect(point.lng_lat).to eq([point.lng, point.lat])
+				point.lng_lat!.lat_lng!
+				expect(point.to_a).to eq([point.lat, point.lng])
+				expect(point.order).to eq(:lat_lng)
+				expect(point.to_s).to eq(
+					point.empty? ? '' : "(#{[point.lat, point.lng].join(',')})"
+				)
 			end
 		end
 	end

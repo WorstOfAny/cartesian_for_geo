@@ -23,10 +23,9 @@ module CartesianForGeo
 		include Comparable
 
 		attr_accessor :lat, :lng
-		attr_reader :coords
+		attr_reader :coords, :order
 
 		alias to_a coords
-		alias lat_lng coords
 
 		class << self
 			alias [] new
@@ -39,6 +38,7 @@ module CartesianForGeo
 		def initialize(*coords)
 			@coords = coords.flatten
 			@lat, @lng = @coords
+			@order = :lat_lng
 		end
 
 		def side
@@ -54,11 +54,19 @@ module CartesianForGeo
 		end
 
 		def to_s
-			empty? ? '' : "(#{lat},#{lng})"
+			empty? ? '' : "(#{coords.join(',')})"
 		end
 
-		def lng_lat
-			coords.reverse
+		def lng_lat!
+			@order = :lng_lat
+			@coords = [@lng, @lat]
+			self
+		end
+
+		def lat_lng!
+			@order = :lat_lng
+			@coords = [@lat, @lng]
+			self
 		end
 
 		def to_json(*)
@@ -70,7 +78,10 @@ module CartesianForGeo
 		end
 
 		def <=>(other)
-			[to_a, other.to_a].map { |cord| cord.map { |f| f.round 9 } }.reduce(:<=>)
+			[
+				to_a,
+				other.to_a.public_send(order == other.order ? :itself : :reverse)
+			].map { |cord| cord.map { |f| f.round 9 } }.reduce(:<=>)
 		end
 	end
 
