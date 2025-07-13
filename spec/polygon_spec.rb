@@ -86,7 +86,7 @@ RSpec.describe CartesianForGeo::Polygon do
 	end
 
 	describe '#include?' do
-		it 'should return true if CartesianForGeo are on the same side' \
+		it 'should return true if CartesianForGeo are on the same side ' \
 			'and lat_range of one cover lat_range of another one ' do
 			expect(@polygon1.include?(@polygon2)).to be_truthy
 			expect(@polygon2.include?(@polygon1)).to be_falsey
@@ -94,7 +94,7 @@ RSpec.describe CartesianForGeo::Polygon do
 	end
 
 	describe '#lat_range' do
-		it 'should return lat range' \
+		it 'should return lat range ' \
 			'from first vector from point and last vector to point' do
 			expect(@polygon1.lat_range).to eq(1.0..2.0)
 			expect(@polygon2.lat_range).to eq(1.5..2.0)

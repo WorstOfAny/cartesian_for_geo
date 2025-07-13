@@ -37,7 +37,7 @@ RSpec.describe CartesianForGeo::PolygonsCollection do
 			expect(@collection << @first_polygon).to eq(@collection)
 		end
 
-		it 'should insert polygon that includes' \
+		it 'should insert polygon that includes ' \
 			'another polygon and concat with him and delete included CartesianForGeo' do
 
 			@collection << @first_polygon << @third_polygon
