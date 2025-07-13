@@ -1,5 +1,7 @@
 require 'cartesian_for_geo/version'
-require 'gorilla_patch/cover'
+if RUBY_VERSION <= '2.7'
+  require 'gorilla_patch/cover'
+end
 
 module CartesianForGeo
 	## Collection (Array) of Polygons
@@ -167,7 +169,9 @@ module CartesianForGeo
 			self
 		end
 
-		using GorillaPatch::Cover
+    if RUBY_VERSION <= '2.7'
+      using GorillaPatch::Cover
+    end
 
 		def include?(other)
 			side == other.side && lat_range.cover?(other.lat_range)
